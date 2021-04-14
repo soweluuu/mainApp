@@ -9,8 +9,9 @@ export class LoginScreen extends Component {
 
         this.state = {
             email: " ",
-            password: " "
+            password: " " 
         }
+        this.onSignUp = this.onSignUp.bind(this)
     }
 
     onSignUp() {

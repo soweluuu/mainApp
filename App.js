@@ -2,6 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import React, {Component} from 'react';
 import { StyleSheet, Text, View} from 'react-native';
 
+import {Provider} from 'react-redux'
+import {createStore, applyMiddleware} from 'redux'
+import rootReducer from './app/redux/reducers'
+import thunk from 'redux-thunk'
+const store = createStore(rootReducer, applyMiddleware(thunk))
+
 import * as firebase from 'firebase';
 
 const firebaseConfig = {
@@ -23,6 +29,8 @@ import { NavigationContainer, StackActions } from '@react-navigation/native';
 
 import LoginScreen from './app/screens/LoginScreen';
 import MainScreen from './app/screens/MainScreen';
+import ClientsList from './app/screens/ClientsList';
+
 
 const Stack = createStackNavigator();
 
@@ -61,22 +69,26 @@ export class App extends Component {
       )
     }
     if (!loggedIn) {
-      return(
+      return (
         <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}}/>
-          <Stack.Screen name="Main" component={LoginScreen} options={{headerShown: false}}/>
+          
         </Stack.Navigator>
       </NavigationContainer>
   
       )
     }
-    return(
-      <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Main" component={MainScreen} options={{headerShown: false}}/>
-      </Stack.Navigator>
-      </NavigationContainer>
+    
+    return (
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Main" component={MainScreen} options={{headerShown: false}}/>
+            
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
     )
   }
 }
