@@ -1,16 +1,28 @@
+import { NavigationContainer, StackActions } from '@react-navigation/native';
 import React, {Component} from 'react';
 import { useState } from "react";
+import { useNavigation } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
 
 import { View, StyleSheet, Text, Image, TouchableOpacity, onPress, SafeAreaView, Modal, Pressable} from 'react-native';
 import ClientProfileCard from "../components/ClientProfileCard"
+import {NotesFiles} from "./NotesFiles"
+
+
 
 export class Profile extends Component {
+
+
+
     state = {
-        modalVisible: false,
-     }
-     toggleModal(visible) {
-        this.setState({ modalVisible: visible });
-     }
+        isVisible: false
+      };
+    
+      
+      displayModal(show){
+        this.setState({isVisible: show})
+      }
     
     
     render() {
@@ -29,17 +41,23 @@ export class Profile extends Component {
            
            <View style={styles.centeredView}>
            <Modal 
-                animationType = {"slide"} transparent = {false}
-                visible = {this.state.modalVisible}
+                animationType = {"slide"} transparent = {true}
+                visible = {this.state.isVisible}
                 onRequestClose = {() => { console.log("Modal has been closed.") } }
                  >
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
-                        <Text style={styles.modalText}>Hello World!</Text>
+                        <Text style={styles.modalText}>
+                            More information
+                            More information
+                            More information
+                            More information
+                        </Text>
                         <Pressable
                             style={styles.buttonModal}
-                            onPress = {() => {
-                                this.toggleModal(!this.state.modalVisible)}}>
+                            onPress={() => {
+                                this.displayModal(!this.state.isVisible);}
+                               }>
                             <Text style={styles.textStyle}>Hide</Text>    
                         </Pressable>
                     </View>
@@ -56,7 +74,9 @@ export class Profile extends Component {
                  </Text>
                  <TouchableOpacity
                   style={styles.button}
-                  onClick={this.onClickButton}
+                  onPress={() => {
+                    this.displayModal(true);
+                  }}
                   >      
                   <Text style={styles.buttonText}> View </Text>
                 </TouchableOpacity>
@@ -68,7 +88,7 @@ export class Profile extends Component {
                  </Text>
                  <TouchableOpacity
                   style={styles.button}
-                  onPress = {() => {this.toggleModal(true)}}
+                  onPress={() => this.props.navigation.navigate(NotesFiles)}
                   >      
                   <Text style={styles.buttonText}> View </Text>
                 </TouchableOpacity>
@@ -77,7 +97,7 @@ export class Profile extends Component {
             </View>
 
         </View>
-                
+              
         )
     }
 }

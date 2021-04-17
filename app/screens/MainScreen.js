@@ -5,9 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { createStackNavigator } from '@react-navigation/stack';
 import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
 
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {fetchUser} from '../redux/actions/index'
+
 
 import {Home} from './Home'
 import ClientsList from "./ClientsList"
@@ -17,6 +15,8 @@ import {Profile} from "./Profile"
 import {Portfolio} from "./Portfolio"
 import {Tasks} from "./Tasks"
 import {Market} from './Market'
+import {NotesFiles} from './NotesFiles'
+import {AddTask} from './AddTask'
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -214,6 +214,19 @@ function HomeTabComponent(props) {
 );
 };
 
+function CreateManagerStack(props) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+      headerShown: false
+      }} >
+    <Stack.Screen name="Notifications" children={ManagerTabComponent} />
+    <Stack.Screen name="Tasks" component={Tasks}/>
+    <Stack.Screen name="AddTasks" component={AddTask}/>
+  </Stack.Navigator>
+  )
+}
+
 function ManagerTabComponent(props) {
   return (
       <TopTabs.Navigator tabBar={props => <ManagerTopBars {...props} />}>
@@ -226,11 +239,38 @@ function ManagerTabComponent(props) {
 function ClientTabComponent(props) {
   return (
       <TopTabs.Navigator tabBar={props => <ProfileTopBars {...props} />}>
-   <TopTabs.Screen name="Overview" component={Profile} />
+   <TopTabs.Screen name="Overview" children={CreateProfileStack} />
    <TopTabs.Screen name="Portfolio" component={Portfolio} />
  </TopTabs.Navigator>
 );
 };
+
+function CreateClientStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+      headerShown: false
+      }} >
+    <Stack.Screen name="ClienstList" component={ClientsList} />
+    <Stack.Screen name="Profile" children={ClientTabComponent}/>
+    <Stack.Screen name="Portfolio" component={Portfolio}/>
+  </Stack.Navigator>
+  )
+  
+}
+
+function CreateProfileStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+      headerShown: false
+      }} >
+    <Stack.Screen name="Profile" component={Profile} />
+    <Stack.Screen name="NotesFiles" component={NotesFiles}/>
+  </Stack.Navigator>
+  )
+  
+}
 
 function CreateListStack() {
   return (
@@ -239,17 +279,14 @@ function CreateListStack() {
       headerShown: false
       }} >
     <Stack.Screen name="Clients" component={ClientsList} />
-    <Stack.Screen name="Profile" children={ClientTabComponent}/>
+    <Stack.Screen name="Profile" children={ClientTabComponent} />
   </Stack.Navigator>
   )
-  
 }
 
 export class MainScreen extends Component{
 
-componentDidMount() {
-  this.props.fetchUser()
-}
+
 
     render() {
         return (
@@ -279,14 +316,14 @@ componentDidMount() {
       }}
     >
         <Tab.Screen name="Home" component={HomeTabComponent} />
-        <Tab.Screen name="Clients" component={CreateListStack}  />
-        <Tab.Screen name="Manager" children={ManagerTabComponent} />
+        <Tab.Screen name="Clients" component={CreateClientStack}  />
+        <Tab.Screen name="Manager" children={CreateManagerStack} />
         <Tab.Screen name="Settings" component={Settings} />
       </Tab.Navigator>
         )
     }
 }
 
-const mapDispatchProps = (dispatch) => bindActionCreators({fetchUser}, dispatch)
 
-export default connect(null, mapDispatchProps)(MainScreen)
+
+export default MainScreen

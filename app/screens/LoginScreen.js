@@ -18,12 +18,19 @@ export class LoginScreen extends Component {
         const {email, password} = this.state;
         firebase.auth().signInWithEmailAndPassword(email, password)
         .then((result) => {
+            firebase.firestore().collection("users")
+                .doc(firebase.auth().currentUser.uid)
+                .set({
+                    email,
+                    password
+                })
             console.log(result)
         })
         .catch((error) => {
             console.log(error)
         })
     }
+
 
     render() {
         return (

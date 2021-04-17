@@ -6,7 +6,7 @@ import {Provider} from 'react-redux'
 import {createStore, applyMiddleware} from 'redux'
 import rootReducer from './app/redux/reducers'
 import thunk from 'redux-thunk'
-const store = createStore(rootReducer, applyMiddleware(thunk))
+
 
 import * as firebase from 'firebase';
 
@@ -30,6 +30,7 @@ import { NavigationContainer, StackActions } from '@react-navigation/native';
 import LoginScreen from './app/screens/LoginScreen';
 import MainScreen from './app/screens/MainScreen';
 import ClientsList from './app/screens/ClientsList';
+import {NotesFiles} from './app/screens/NotesFiles';
 
 
 const Stack = createStackNavigator();
@@ -81,14 +82,14 @@ export class App extends Component {
     }
     
     return (
-      <Provider store={store}>
+      
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen name="Main" component={MainScreen} options={{headerShown: false}}/>
             
           </Stack.Navigator>
         </NavigationContainer>
-      </Provider>
+      
     )
   }
 }
