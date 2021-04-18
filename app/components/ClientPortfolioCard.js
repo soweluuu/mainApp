@@ -10,9 +10,9 @@ function ClientPortfolioCard(props) {
     return (
         <View style={styles.rectangle}>
             <LinearGradient
-             colors={['rgba(0,0,0,0.05)', 'transparent']}
-             start={[0.6, 0.2]}
-             end={[0.1, 0.4]}
+             colors={['rgba(0,0,0,0.01)', 'transparent']}
+             start={[0.1, 0.4]}
+             end={[0.8, 0.9]}
              style={styles.gradient}
             >
             <View style={styles.idWrapper}>
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     initValueText:{
         color: "#103143",
         fontFamily: "Futura-Medium",
-        fontSize: 14
+        fontSize: 15
     },
     initValueWrapper:{
         flexDirection: 'row'
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
         color: "#103143",
         fontFamily: "Futura",
         fontWeight: "bold",
-        fontSize: 17
+        fontSize: 18
     },
     valueContainer:{
         borderWidth: 1,
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     rectangle:{
-        backgroundColor: '#E1E1E1',
+        backgroundColor: 'white',
         shadowOffset: { height: 5},
         shadowOpacity: 0.3,
         borderRadius: 15,

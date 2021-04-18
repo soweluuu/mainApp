@@ -12,9 +12,9 @@ function ClientProfileCard(props) {
         <View style={styles.rectangle}>
            
                <LinearGradient
-               colors={['rgba(0,0,0,0.05)', 'transparent']}
-               start={[0.6, 0.2]}
-               end={[0.1, 0.4]}
+               colors={['rgba(0,0,0,0.01)', 'transparent']}
+               start={[0.1, 0.4]}
+               end={[0.8, 0.9]}
                style={styles.gradient}
                >
             <View style={styles.zhopa}>

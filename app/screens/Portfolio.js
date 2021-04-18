@@ -7,8 +7,8 @@ export class Portfolio extends Component {
     render() {
         return (
             <View style={styles.background}>
-                <View style={styles.cardWrapper}>
                 
+                <View style={styles.cardWrapper}>
                 
                     <ClientPortfolioCard portfolioID={'615081-1'} clientID={'615081'} value={'66.996.000£'}
                     initValue={'66.995.445£'} type={'EXE'} feeCode={'A2'}

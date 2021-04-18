@@ -19,6 +19,12 @@ export class NotesFiles extends Component {
               
                 <View style={styles.notes}>
                     <Text style={styles.notesText}>Notes</Text>
+                    <Text style={styles.textInNotes}>Other contacts</Text>
+                    <Text style={styles.textInNotes}>Steve Smith, attorney
+                    steve.smith@mail.com
+                    </Text>
+                    <Text style={styles.textInNotes}>A customer is a blah blah. Mostly interested in blah blah blah
+                    </Text>
                 </View>
                 <View style={styles.files}>
                     <Text style={styles.notesFiles}>Uploaded files </Text>
