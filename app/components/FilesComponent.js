@@ -13,7 +13,7 @@ function FilesComponent(props) {
                 <Icon  name="file" size={25} color="#11365F" />
             </Text>
             <Text style={styles.fileText}>{fileName}</Text>
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => toggleImageScanModal()} >
                 <Text style={styles.buttonText}>View</Text>
             </TouchableOpacity>
         </View>
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         
     },
     button:{
-        backgroundColor: "#103143",
+        backgroundColor: "#11365F",
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 8,

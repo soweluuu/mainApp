@@ -14,7 +14,6 @@ import {NotesFiles} from "./NotesFiles"
 export class Profile extends Component {
 
 
-
     state = {
         isVisible: false
       };
@@ -26,6 +25,7 @@ export class Profile extends Component {
     
     
     render() {
+      
         
         return (
             <View style={styles.background}>

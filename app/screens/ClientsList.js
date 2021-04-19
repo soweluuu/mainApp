@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet, Text, TouchableOpacity, onPress, ScrollView, FlatList} from 'react-native';
 import ClientRectangleComponent from '../components/ClientRectangleComponent';
 import {Profile} from './Profile'
-import {getClients} from "../Fire";
+
 
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -48,9 +48,7 @@ export class ClientsList extends Component {
         clientList: []
     }
 
-    componentDidMount() {
-        getClients()
-    }
+    
 
     render() {
     return (

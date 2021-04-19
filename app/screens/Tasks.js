@@ -1,18 +1,32 @@
 import React, { Component } from 'react'
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, Modal} from 'react-native';
 import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Ionicons } from '@expo/vector-icons';
 
 import GroupComponent from "../components/GroupComponent";
 import tempData from "../tempData";
+import AddGroupModal from "../components/AddGroupModal";
 
 export class Tasks extends Component {
+    state = {
+        addGroupVisible: false
+    }
+
+    toggleAddGroupModal(){
+        this.setState({addGroupVisible: !this.state.addGroupVisible})
+    }
+
     render() {
         return (
             <View style={styles.background}>
+                <Modal animationType="slide" 
+                visible={this.state.addGroupVisible} 
+                onRequestClose={() => this.toggleAddGroupModal()}>
+                    <AddGroupModal closeModal={() => this.toggleAddGroupModal()} /> 
+                </Modal>
                 <View style={styles.buttonContainer}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.button} onPress={() => this.toggleAddGroupModal()}>
                     <Ionicons name="md-add-outline" size={32} color="white" />
                     <Text style={styles.buttonText}>Create new group</Text>
                     </TouchableOpacity>
