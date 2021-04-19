@@ -4,9 +4,8 @@ import { View, Text, StyleSheet, TouchableOpacity, onPress} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 
-function ClientRectangleComponent(props) {
-    const navigation = useNavigation();
-    const {name, tagline} = props;
+function ClientRectangleComponent({list}) {
+    
 
     return (
         <View style={styles.rectangle}>
@@ -15,10 +14,10 @@ function ClientRectangleComponent(props) {
                  <Icon  name="user" size={25} color="#11365F" />
                </Text>
                <View>
-                 <Text style={styles.name}>{name} </Text>
+                 <Text style={styles.name}>{list.name} </Text>
                    <View style={styles.clientIDwrapper}>
                      <Text style={styles.clientID}>Client ID:</Text>
-                     <Text style={styles.clientIDno}> {tagline} </Text>
+                     <Text style={styles.clientIDno}> hell </Text>
                    </View>
                </View>
             </View>

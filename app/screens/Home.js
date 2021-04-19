@@ -3,6 +3,9 @@ import {Text, View, FlatList} from 'react-native';
 
 import { getNews } from '../components/news';
 import Article from '../components/Article';
+import "firebase/auth"
+
+
 
 export class Home extends Component {
     constructor(props) {
@@ -32,6 +35,8 @@ export class Home extends Component {
     
     render() {
         return (
+          <View>
+            
             <FlatList
             data={this.state.articles}
             renderItem={({ item }) => <Article article={item} />}
@@ -39,6 +44,8 @@ export class Home extends Component {
             refreshing={this.state.refreshing}
             onRefresh={this.handleRefresh.bind(this)}
           />
+          </View>
+            
                 
         )
     }

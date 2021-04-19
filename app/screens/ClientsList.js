@@ -1,34 +1,170 @@
 import React, { Component } from 'react'
-import { View, StyleSheet, Text, Image, TouchableOpacity, onPress, ScrollView} from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, onPress, ScrollView, FlatList} from 'react-native';
 import ClientRectangleComponent from '../components/ClientRectangleComponent';
+import {Profile} from './Profile'
+import {getClients} from "../Fire";
 
-function ClientsList() {
-    
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+const DATA = [
+    {
+        clientName: "Li Lin",
+        clientID: '615081'
+    },
+    {
+        clientName: "Utemaro Watasi",
+        clientID: '615082'
+    },
+    {
+        clientName: "Hernandez Ximena",
+        clientID: '615083'
+    },
+    {
+        clientName: "Montandon Rachael",
+        clientID: '615084'
+    },
+    {
+        clientName: "Stager Isabelle",
+        clientID: '615085'
+    },
+    {
+        clientName: "Surbeck Peter",
+        clientID: '615086'
+    },
+    {
+        clientName: "Juric Jan",
+        clientID: '615087'
+    },
+    {
+        clientName: "Travers Millard",
+        clientID: '615088'
+    }
+]
+
+export class ClientsList extends Component {
+
+    state = {
+        clientList: []
+    }
+
+    componentDidMount() {
+        getClients()
+    }
+
+    render() {
     return (
         <View  style={styles.background}>
-            <ScrollView>
+            
              <View style={styles.clientsWrapper}>
                 <Text style={styles.textClients}> Clients </Text>
                 <View style={styles.clients}> 
-                    <ClientRectangleComponent name={'Li Lin'} tagline={'615081'}/>
-                    <ClientRectangleComponent name={'Utemaro Watasi'} tagline={'615082'}/>
-                    <ClientRectangleComponent name={'Hernandez Ximena'} tagline={'615083'}/>
-                    <ClientRectangleComponent name={'Montandon Rachael'} tagline={'615084'}/>
-                    <ClientRectangleComponent name={'Stager Isabelle'} tagline={'615085'}/>
-                    <ClientRectangleComponent name={'Surbeck Peter'} tagline={'615086'}/>
-                    <ClientRectangleComponent name={'Juric Jan'} tagline={'615087'}/>
-                    <ClientRectangleComponent name={'Travers Millard'} tagline={'615088'}/>
-                    <ClientRectangleComponent name={'Name Surname'} tagline={'615089'}/>
-                    <ClientRectangleComponent name={'Name Surname'} tagline={'615090'}/>
-                    <ClientRectangleComponent name={'Name Surname'} tagline={'615091'}/>
+                    <FlatList 
+                        data={DATA}
+                        keyExtractor={item => item.clientName}
+                        renderItem={({item}) => 
+                        <View style={styles.rectangle}>
+                        <View style={styles.rectLeft}>
+                           <Text style={styles.user}>
+                             <Icon  name="user" size={25} color="#11365F" />
+                           </Text>
+                           <View>
+                             <Text style={styles.name}>{item.clientName} </Text>
+                               <View style={styles.clientIDwrapper}>
+                                 <Text style={styles.clientID}>Client ID:</Text>
+                                 <Text style={styles.clientIDno}> {item.clientID} </Text>
+                               </View>
+                           </View>
+                        </View>
+            
+                        <View style={styles.rectRight}>
+                            <TouchableOpacity
+                              style={styles.button}
+                              onPress={() => this.props.navigation.navigate(Profile)}
+                              >      
+                              <Text style={styles.buttonText}> View profile </Text>
+                            </TouchableOpacity>
+                        </View>
+                      </View>
+                        }
+                    />
+
+
                 </View>
              </View>
-          </ScrollView>
+        
         </View>
     );
+  }
 }
 
 const styles = StyleSheet.create({
+    clientIDwrapper:{
+        flexDirection: "row"
+    },
+    user:{
+        marginRight: 15
+    },
+   
+    rectLeft:{
+        flexDirection: "row",
+        alignItems: "center",
+        flexWrap: "wrap"
+        
+    },
+    buttonText:{
+        color: "#FFFFFF",
+        fontFamily: "Futura-Medium",
+        fontSize: 10
+    },
+    button:{
+        backgroundColor: "#11365F",
+        width: 75,
+        height: 16,
+        borderRadius: 8,
+        justifyContent: "center",
+        alignItems: "center"
+        
+    },
+    clientIDno:{
+        color: "#103143",
+        fontFamily: "Futura-Medium",
+        opacity: 0.75,
+        fontSize: 11
+    },
+    clientID:{
+        color: "#103143",
+        fontFamily: "Futura-Medium",
+        opacity: 0.75,
+        fontSize: 11
+        
+    },
+    name:{
+        color: "#103143",
+        fontFamily: "Futura",
+        fontWeight: "bold",
+        fontSize: 16,
+        
+       
+    },
+    
+    
+    rectangle:{
+        backgroundColor: '#FFFFFF',
+        paddingLeft: 15,
+        paddingRight: 15,
+        paddingVertical: 10,
+        borderRadius: 15,
+        borderWidth: 1,
+        borderColor: "#95DBFB",
+        flexDirection: "row",
+        alignItems: 'center',
+        justifyContent: "space-between",
+        marginBottom: 20,
+        
+       
+        
+    },
     clients:{
         marginTop: 60
     },
