@@ -8,13 +8,43 @@ import GroupComponent from "../components/GroupComponent";
 import tempData from "../tempData";
 import AddGroupModal from "../components/AddGroupModal";
 
+import firebase from 'firebase';
+import "firebase/firestore";
+
+
 export class Tasks extends Component {
     state = {
-        addGroupVisible: false
-    }
+        addGroupVisible: false,
+        groups: tempData
+    };
 
     toggleAddGroupModal(){
         this.setState({addGroupVisible: !this.state.addGroupVisible})
+    }
+    renderGroup = group => {
+        return <GroupComponent group={group} updateGroup={this.updateGroup}/>
+    }
+
+    addGroup = group => {
+        this.setState({groups: [...this.state.groups, {...group, id: this.state.groups.length + 1, todos: [] }] });
+    };
+
+    updateGroup = group => {
+        this.setState({
+            groups: this.state.groups.map(item => {
+                return item.id === group.id ? group : item
+            })
+        })
+    };
+
+    getGroups() {
+        let ref = firebase.firestore().collection('groups').doc('IJ3bZzriK4jkNRac5JCO');
+
+        this.unsubscribe = ref.onSnapshot(snapshot => {
+            groups = []
+
+            snapshot.forEach
+        })
     }
 
     render() {
@@ -23,7 +53,7 @@ export class Tasks extends Component {
                 <Modal animationType="slide" 
                 visible={this.state.addGroupVisible} 
                 onRequestClose={() => this.toggleAddGroupModal()}>
-                    <AddGroupModal closeModal={() => this.toggleAddGroupModal()} /> 
+                    <AddGroupModal closeModal={() => this.toggleAddGroupModal()} addGroup={this.addGroup} /> 
                 </Modal>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.button} onPress={() => this.toggleAddGroupModal()}>
@@ -33,12 +63,11 @@ export class Tasks extends Component {
                 </View>
                 <View style={styles.groupsContainer}>
                     <FlatList 
-                        data={tempData}
+                        data={this.state.groups}
                         keyExtractor={item => item.name}
                         renderItem={({item}) => 
-                            <GroupComponent group={item} /> }
-                       
-                    
+                            this.renderGroup(item) }
+                        keyboardShouldPersistTaps="always"
                     />
                 </View>
             </View>

@@ -7,9 +7,6 @@ import {createStore, applyMiddleware} from 'redux'
 import rootReducer from './app/redux/reducers'
 import thunk from 'redux-thunk'
 
-
-
-
 import * as firebase from 'firebase';
 import "firebase/firestore";
 
@@ -24,21 +21,7 @@ const firebaseConfig = {
 };
 
 if(firebase.apps.length === 0){
-    firebase.initializeApp(firebaseConfig)
-}
-
-export async function getClients(clientsRetrieved){
-  var clientList = [];
-  
-  var snapshot = await firebase.firestore()
-  .collection('clients')
-  .get()
-
-  snapshot.forEach((doc) => {
-      clientList.push(doc.data());
-  });
-
-  clientsRetrieved(clientList);
+  firebase.initializeApp(firebaseConfig)
 }
 
 import { createStackNavigator } from '@react-navigation/stack';
