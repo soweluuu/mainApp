@@ -23,6 +23,9 @@ export class TodoModal extends Component {
         Keyboard.dismiss();
     };
 
+
+    
+
     renderTodo = (todo, index) => {
         return (
             <View style={styles.todoContainer}>

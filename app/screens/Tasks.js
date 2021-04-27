@@ -15,8 +15,17 @@ import "firebase/firestore";
 export class Tasks extends Component {
     state = {
         addGroupVisible: false,
-        groups: tempData
+        groups: [],
+        loading: true
     };
+
+  //  componentDidMount() {
+   //     firebase.getGroups(groups => {
+  //          this.setState({groups}, () => {
+  //              this.setState({loading: false})
+   //         })
+   //     })
+  //  }
 
     toggleAddGroupModal(){
         this.setState({addGroupVisible: !this.state.addGroupVisible})
@@ -37,15 +46,17 @@ export class Tasks extends Component {
         })
     };
 
-    getGroups() {
-        let ref = firebase.firestore().collection('groups').doc('IJ3bZzriK4jkNRac5JCO');
+   // getGroups() {
+    //    let ref = firebase.firestore().collection('groups').doc('IJ3bZzriK4jkNRac5JCO');
 
-        this.unsubscribe = ref.onSnapshot(snapshot => {
-            groups = []
+    //    this.unsubscribe = ref.onSnapshot(snapshot => {
+    //        groups = []
 
-            snapshot.forEach
-        })
-    }
+    //        snapshot.forEach(doc => {
+    //            groups.push({id: doc.id, ...doc.data()})
+     //       })
+    //    })
+   // };
 
     render() {
         return (
@@ -63,7 +74,7 @@ export class Tasks extends Component {
                 </View>
                 <View style={styles.groupsContainer}>
                     <FlatList 
-                        data={this.state.groups}
+                        data={tempData}
                         keyExtractor={item => item.name}
                         renderItem={({item}) => 
                             this.renderGroup(item) }

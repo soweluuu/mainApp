@@ -2,10 +2,6 @@ import { StatusBar } from 'expo-status-bar';
 import React, {Component} from 'react';
 import { StyleSheet, Text, View} from 'react-native';
 
-import {Provider} from 'react-redux'
-import {createStore, applyMiddleware} from 'redux'
-import rootReducer from './app/redux/reducers'
-import thunk from 'redux-thunk'
 
 import * as firebase from 'firebase';
 import "firebase/firestore";
@@ -19,6 +15,8 @@ const firebaseConfig = {
   appId: "1:639111169431:web:5d534c46eb5efb0f64f0d2",
   measurementId: "G-HPWT2QN41F"
 };
+
+
 
 if(firebase.apps.length === 0){
   firebase.initializeApp(firebaseConfig)
