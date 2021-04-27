@@ -1,54 +1,50 @@
-import React, { Component } from 'react'
-import {Text, View, FlatList} from 'react-native';
-
-import { getNews } from '../components/news';
-import Article from '../components/Article';
-import "firebase/auth"
 
 
+import React, {useState, useEffect} from 'react'
+import {View, StyleSheet, Text, Button, FlatList} from 'react-native'
+import NewsComponent from '../components/NewsComponent'
+import newsApi from '../apis/newsApi'
 
-export class Home extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { articles: [], refreshing: true };
-        this.fetchNews = this.fetchNews.bind(this);
-      }
-      // Called after a component is mounted
-      componentDidMount() {
-        this.fetchNews();
-       }
-    
-      fetchNews() {
-        getNews()
-          .then(articles => this.setState({ articles, refreshing: false }))
-          .catch(() => this.setState({ refreshing: false }));
-      }
-    
-      handleRefresh() {
-        this.setState(
-          {
-            refreshing: true
-        },
-          () => this.fetchNews()
-        );
-      }
-    
-    render() {
-        return (
-          <View>
+const News= ({navigation}) => {
+    const [news, setNews] = useState([])
+
+    useEffect(()=>{
+        getNewsFromAPI()
+    },[])
+
+    //const newsResponse= async() => {
+    //    const response= await newAPI.get('top-headlines?country=us&apiKey=e775d6f87be043448be3b3ce9ba73f64')
+    //    console.log(response.data)
+    //}
+
+    function getNewsFromAPI(){
+        newsApi.get('top-headlines?country=us&apiKey=e775d6f87be043448be3b3ce9ba73f64')
+        .then(async function(response){
+            setNews(response.data);
             
-            <FlatList
-            data={this.state.articles}
-            renderItem={({ item }) => <Article article={item} />}
-            keyExtractor={item => item.url}
-            refreshing={this.state.refreshing}
-            onRefresh={this.handleRefresh.bind(this)}
-          />
-          </View>
-            
-                
-        )
+        })
+        .catch(function (error){
+            console.log(error)
+        })
     }
+
+    if (!news) {
+        return null
+    }
+
+
+
+    return (
+        <View>
+            <FlatList data={news.articles}
+                    keyExtractor= {(item, index) => 'key' + index}
+                    renderItem = {({item}) => {
+                        return <NewsComponent item={item} />
+                    }} />
+            
+        </View>
+        
+    )
 }
 
-export default Home
+export default News

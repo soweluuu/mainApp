@@ -8,24 +8,39 @@ import GroupComponent from "../components/GroupComponent";
 import tempData from "../tempData";
 import AddGroupModal from "../components/AddGroupModal";
 
-import firebase from 'firebase';
-import "firebase/firestore";
 
+import Fire from "../Fire";
+import firebase from 'firebase';
 
 export class Tasks extends Component {
     state = {
         addGroupVisible: false,
         groups: [],
-        loading: true
+        loading: true,
+        user: {}
     };
 
-  //  componentDidMount() {
-   //     firebase.getGroups(groups => {
-  //          this.setState({groups}, () => {
-  //              this.setState({loading: false})
-   //         })
-   //     })
-  //  }
+    componentDidMount() {
+        firebase = new Fire((error, user) => {
+          if (error) {
+            return alert("Uh oh, something went wrong")
+          }
+
+          firebase.getGroups(groups => {
+              this.setState({groups, user}, () => {
+                this.setState({loading: false})
+              })
+          })
+
+          this.setState({ user });
+        });
+      }
+
+
+      componentWillUnmount() {
+          firebase.detach();
+      }
+
 
     toggleAddGroupModal(){
         this.setState({addGroupVisible: !this.state.addGroupVisible})
@@ -46,17 +61,7 @@ export class Tasks extends Component {
         })
     };
 
-   // getGroups() {
-    //    let ref = firebase.firestore().collection('groups').doc('IJ3bZzriK4jkNRac5JCO');
-
-    //    this.unsubscribe = ref.onSnapshot(snapshot => {
-    //        groups = []
-
-    //        snapshot.forEach(doc => {
-    //            groups.push({id: doc.id, ...doc.data()})
-     //       })
-    //    })
-   // };
+   
 
     render() {
         return (
@@ -66,6 +71,9 @@ export class Tasks extends Component {
                 onRequestClose={() => this.toggleAddGroupModal()}>
                     <AddGroupModal closeModal={() => this.toggleAddGroupModal()} addGroup={this.addGroup} /> 
                 </Modal>
+                <View>
+                    <Text>user: {this.state.user.uid}</Text>
+                </View>
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.button} onPress={() => this.toggleAddGroupModal()}>
                     <Ionicons name="md-add-outline" size={32} color="white" />
@@ -74,8 +82,8 @@ export class Tasks extends Component {
                 </View>
                 <View style={styles.groupsContainer}>
                     <FlatList 
-                        data={tempData}
-                        keyExtractor={item => item.name}
+                        data={this.state.groups}
+                        keyExtractor={item => item.id.toString()}
                         renderItem={({item}) => 
                             this.renderGroup(item) }
                         keyboardShouldPersistTaps="always"
@@ -114,7 +122,6 @@ const styles = StyleSheet.create({
         flex: 1, 
         padding: 20
         
-        
     }
 })
-export default Tasks
+export default Tasks;

@@ -4,32 +4,32 @@ import { View, Text, StyleSheet, Button, TextInput, Image, TouchableOpacity} fro
 import firebase from 'firebase';
 
 export class LoginScreen extends Component {
-    constructor(props) {
-        super(props);
+   // constructor(props) {
+   //     super(props);
 
-        this.state = {
-            email: " ",
-            password: " " 
-        }
-        this.onSignUp = this.onSignUp.bind(this)
-    }
+     //   this.state = {
+       //     email: " ",
+         //   password: " " 
+        //}
+       // this.onSignUp = this.onSignUp.bind(this)
+    //}
 
-    onSignUp() {
-        const {email, password} = this.state;
-        firebase.auth().signInWithEmailAndPassword(email, password)
-        .then((result) => {
-            firebase.firestore().collection("users")
-                .doc(firebase.auth().currentUser.uid)
-                .set({
-                    email,
-                    password
-                })
-            console.log(result)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
-    }
+  //  onSignUp() {
+    //    const {email, password} = this.state;
+      //  firebase.auth().signInWithEmailAndPassword(email, password)
+        //.then((result) => {
+          //  firebase.firestore().collection("users")
+            //    .doc(firebase.auth().currentUser.uid)
+              //  .set({
+                //    email,
+                  //  password
+               // })
+            //console.log(result)
+        //})
+        //.catch((error) => {
+          //  console.log(error)
+        //})
+    //}
 
 
     render() {

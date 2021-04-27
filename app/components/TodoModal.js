@@ -62,7 +62,7 @@ export class TodoModal extends Component {
                     <View style={[styles.section, {flex: 3}]}>
                         <FlatList data={group.todos}
                         renderItem={({item, index}) => this.renderTodo(item, index)}
-                        keyExtractor={item => item.title} 
+                        keyExtractor={(_, index) => index.toString()} 
                         contentContainerStyle={{paddingHorizontal: 32, paddingVertical: 64}}/>
                     </View>
 

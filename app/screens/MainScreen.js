@@ -7,7 +7,7 @@ import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs
 
 
 
-import {Home} from './Home'
+import News from './Home'
 import ClientsList from "./ClientsList"
 import { Manager } from './Manager'
 import {Settings} from "./Settings"
@@ -208,7 +208,7 @@ function ProfileTopBars({ state, descriptors, navigation }) {
 function HomeTabComponent(props) {
   return (
       <TopTabs.Navigator tabBar={props => <HomeTopBars {...props} />}>
-   <TopTabs.Screen name="News" component={Home} />
+   <TopTabs.Screen name="News" component={News} />
    <TopTabs.Screen name="Market" component={Market} />
  </TopTabs.Navigator>
 );
