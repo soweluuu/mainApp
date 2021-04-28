@@ -1,9 +1,9 @@
 
-
-import React, {useState, useEffect} from 'react'
 import {View, StyleSheet, Text, Button, FlatList} from 'react-native'
 import NewsComponent from '../components/NewsComponent'
 import newsApi from '../apis/newsApi'
+
+import React, {useState, useEffect} from 'react';
 
 const News= ({navigation}) => {
     const [news, setNews] = useState([])
@@ -35,7 +35,7 @@ const News= ({navigation}) => {
 
 
     return (
-        <View>
+        <View style={{backgroundColor: "white"}}>
             <FlatList data={news.articles}
                     keyExtractor= {(item, index) => 'key' + index}
                     renderItem = {({item}) => {
@@ -47,4 +47,5 @@ const News= ({navigation}) => {
     )
 }
 
-export default News
+export default News;
+

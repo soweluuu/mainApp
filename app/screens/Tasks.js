@@ -7,10 +7,10 @@ import { Ionicons } from '@expo/vector-icons';
 import GroupComponent from "../components/GroupComponent";
 import tempData from "../tempData";
 import AddGroupModal from "../components/AddGroupModal";
-
-
 import Fire from "../Fire";
-import firebase from 'firebase';
+
+
+
 
 export class Tasks extends Component {
     state = {
@@ -20,26 +20,26 @@ export class Tasks extends Component {
         user: {}
     };
 
-    componentDidMount() {
-        firebase = new Fire((error, user) => {
-          if (error) {
-            return alert("Uh oh, something went wrong")
-          }
+   componentDidMount() {
+    firebase = new Fire((error, user) => {
+        if (error) {
+            return alert("Oh oh something went wrong");
+        }
 
-          firebase.getGroups(groups => {
-              this.setState({groups, user}, () => {
-                this.setState({loading: false})
-              })
-          })
-
-          this.setState({ user });
+        firebase.getGroups(groups => {
+            this.setState({ groups, user }, () => {
+                this.setState({ loading: false });
+            });
         });
-      }
 
 
-      componentWillUnmount() {
-          firebase.detach();
-      }
+        this.setState({ user });
+    });
+   }
+
+componentWillUnmount() {
+    firebase.detach();
+}
 
 
     toggleAddGroupModal(){
@@ -50,16 +50,16 @@ export class Tasks extends Component {
     }
 
     addGroup = group => {
-        this.setState({groups: [...this.state.groups, {...group, id: this.state.groups.length + 1, todos: [] }] });
+        firebase.addGroup({
+            name: group.name,
+            color: group.color,
+            todos: []
+        })
     };
 
     updateGroup = group => {
-        this.setState({
-            groups: this.state.groups.map(item => {
-                return item.id === group.id ? group : item
-            })
-        })
-    };
+        firebase.updateGroup(group);
+    }
 
    
 
@@ -71,9 +71,7 @@ export class Tasks extends Component {
                 onRequestClose={() => this.toggleAddGroupModal()}>
                     <AddGroupModal closeModal={() => this.toggleAddGroupModal()} addGroup={this.addGroup} /> 
                 </Modal>
-                <View>
-                    <Text>user: {this.state.user.uid}</Text>
-                </View>
+               
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity style={styles.button} onPress={() => this.toggleAddGroupModal()}>
                     <Ionicons name="md-add-outline" size={32} color="white" />

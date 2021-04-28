@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     groupContainer:{
         backgroundColor: '#EFEFEF',
         width: "100%",
-        height: 70,
+        height: 80,
         borderRadius: 10,
         marginVertical: 10,
         justifyContent: "flex-start",
